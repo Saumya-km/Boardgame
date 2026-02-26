@@ -1,37 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-    name: Boardgame-deployment
-    namespace: boardgame
+  name: boardgame-deployment
+  namespace: boardgame
 spec:
-   replicas: 2
-   selector: 
-       matchLabels:
-           app: Boardgame
-
-   template:
-      metadata:
-         labels:
-           app: Boardgame
-      spec:
-        containers:
-            - name: Boardgame
-              image: skuma011/boardgame:latest
-              imagePullPolicy: IFNOTPRESENT
-              ports:
-                - containerPort: 8080
+  replicas: 2
+  selector:
+    matchLabels:
+      app: boardgame
+  template:
+    metadata:
+      labels:
+        app: boardgame
+    spec:
+      containers:
+        - name: boardgame
+          image: skuma011/boardgame:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8080
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-   name: boardgame-service
-   namespace: boardgame
+  name: boardgame-service
+  namespace: boardgame
 spec:
-   selector:
-      app: Boardgame
-      type: LoadBalancer
-      ports:
-        - PROTOCOL: TCP
-          port: 8082
-          targetPort: 8080
+  type: LoadBalancer
+  selector:
+    app: boardgame
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 8080
